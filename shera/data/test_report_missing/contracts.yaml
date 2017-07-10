@@ -1,0 +1,16 @@
+'1111':
+    power: 3.45
+    cups: 00000000000F
+    tariff: 2.0A
+    address: Plaça Major n10 1,4 
+    name: Josep
+    surname: Gonzalez Vidal
+    lang: ca_ES 
+'2222':
+    power: 4.5 
+    cups: 00000000001F
+    tariff: 2.0DHA
+    address: Plaça Menor n10 1,4 
+    name: Josefa
+    surname: Gonzalez Vidal
+    lang: es_ES 

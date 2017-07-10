@@ -1,0 +1,4 @@
+1111;;3.45;2.0A;1111.pdf;"this is a message to validate 1111";True
+2222;;4.5;2.0DHA;2222.pdf;"this is a message to validate 2222";True
+3333;;13.45;2.1A;1111.pdf;"this is a message to validate 3333";False
+4444;;14.5;2.1DHA;2222.pdf;"this is a message to validate 4444";False
