@@ -7,7 +7,6 @@ import click
 
 import tasks
 from utils import setup_logging
-import openerp
 
 @click.group()
 @click.option('--log-level', default='info')
@@ -31,7 +30,6 @@ def deliver_reports(contracts, reports, template, output):
     logger = logging.getLogger('shera')
     logger.info('Enqueuing reports to be delivered')
     tasks.deliver_reports(
-        openerp.setup_pool(),
         contracts,
         reports,
         template,

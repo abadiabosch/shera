@@ -8,25 +8,26 @@ from utils import (
 )
 from rq.decorators import job
 
+import openerp
 from reports import get_reports, render_reports
 
 logger = logging.getLogger('shera')
 
-def deliver_reports(setupo, contracts_path, reports_path, 
+def deliver_reports(contracts_path, reports_path,
         template, output_path, bucket=500):
     reports = get_reports(contracts_path, reports_path)
     popper = Popper(reports)
     pops = popper.pop(bucket)
     while pops:
-        j = push_reports.delay(setupo, pops, template, output_path)
+        j = push_reports.delay(pops, template, output_path)
         logger.info("Job id:%s | %s/%s" % (
             j.id, len(pops), len(popper.items))
         )
         pops = popper.pop(bucket)
 
 @job(setup_queue(name='reports'), connection=setup_redis(), timeout=3600)
-def push_reports(setupo, reports, template, output):
-    O = setupo
+def push_reports(reports, template, output):
+    O = openerp.setup_pool()
     start = datetime.now()
     try:
         render_reports(O, reports, template, output)
