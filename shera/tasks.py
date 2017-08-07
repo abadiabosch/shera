@@ -26,7 +26,7 @@ def deliver_reports(setupo, contracts_path, reports_path,
 
 @job(setup_queue(name='reports'), connection=setup_redis(), timeout=3600)
 def push_reports(setupo, reports, template, output):
-    O = setupo() 
+    O = setupo
     start = datetime.now()
     try:
         render_reports(O, reports, template, output)

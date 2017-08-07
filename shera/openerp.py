@@ -10,8 +10,7 @@ def setup_peek(**kwargs):
         'password': os.getenv('PEEK_PASSWORD')
     }
     config.update(kwargs)
-    #return erppeek.Client(**config)
-    return {}
+    return erppeek.Client(**config)
 
 def setup_pool():
     return OpenERP() 
@@ -24,7 +23,7 @@ class OpenERP(object):
         pool_obj = self.O.model('giscedata.polissa')
         pol_obj.send_empowering_report(reports)
 
-    def get_partner_data(contract_id):
+    def get_partner_data(self, contract_id):
         def get_dict_data(data,key):
             if key not in data or len(data[key]) < 2:
                 print "get_partner_data::Error " + str(key) + " not found!"
@@ -40,10 +39,8 @@ class OpenERP(object):
                 print "getPartner_data::Error " + str(key) + " not a float!"
                 return None
             return "%.1f kW" % power
-    
         result = {}
-    
-        pol_obj = O.model('giscedata.polissa')
+        pol_obj = self.O.model('giscedata.polissa')
         pol_ids = pol_obj.search([('name', '=', contract_id)])    
         if len(pol_ids) != 1:
             print "get_partner_data::Error finding contract in erp"

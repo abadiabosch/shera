@@ -35,7 +35,7 @@ def deliver_reports(contracts, reports, template, output):
         contracts,
         reports,
         template,
-        output)
+        output, bucket=25)
 
 if __name__ == '__main__':
     shera(obj={})
