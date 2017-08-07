@@ -41,7 +41,8 @@ class OpenERP(object):
             return "%.1f kW" % power
         result = {}
         pol_obj = self.O.model('giscedata.polissa')
-        pol_ids = pol_obj.search([('name', '=', contract_id)])    
+        part_obj = self.O.model('res.partner')
+        pol_ids = pol_obj.search([('name', '=', contract_id)])
         if len(pol_ids) != 1:
             print "get_partner_data::Error finding contract in erp"
             return None
@@ -64,12 +65,18 @@ class OpenERP(object):
         result['tariff'] = get_dict_data(pol_data[0],'tarifa')[:str_limit]
         result['address'] = pol_data[0]['cups_direccio'][:str_limit] \
                             if 'cups_direccio' in pol_data[0] else None
-        result['lang'] = get_dict_data(pol_data[0],'lang')[:str_limit]
-        compound_name = get_dict_data(pol_data[0],'pagador')[:str_limit]
+
+        if 'pagador' not in pol_data[0]:
+            print "get_partner_data::Error finding payer in erp"
+            return None
+        payer_id = pol_data[0]['pagador'][0]
+        payer_data = part_obj.read([payer_id],['name','lang'])
+        compound_name = get_dict_data(payer_data[0],'name')[:str_limit]
+        result['lang'] = get_dict_data(payer_data[0],'lang')
+
         if not result['power'] or not result['cups'] or not result['tariff']\
             or not result['address'] or not compound_name:
             return None
-    
         splited = compound_name.split(',',1)
         if len(splited) == 1:
             result['name'] = compound_name.strip()
