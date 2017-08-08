@@ -65,7 +65,7 @@ def customize(report, template_name, path_aux, path_output):
             _ = _
         )
 
-    report_name = report['contract_id'] 
+    report_name = report['contract_name']
     write_html(path_aux, report_name,  result)
     custom_pdf = write_pdf(path_aux, report_name)
     original_pdf = report['report']

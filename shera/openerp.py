@@ -20,7 +20,7 @@ class OpenERP(object):
         self.O = setup_peek()
 
     def send_reports(self, reports):
-        pool_obj = self.O.model('giscedata.polissa')
+        pol_obj = self.O.model('giscedata.polissa')
         pol_obj.send_empowering_report(reports)
 
     def get_partner_data(self, contract_id):
@@ -30,6 +30,12 @@ class OpenERP(object):
                 return None 
             return data[key][1]
         
+        def get_dict_raw(data,key):
+            if key not in data:
+                print "get_partner_data::Error " + str(key) + " not found!"
+                return None
+            return data[key]
+
         def get_dict_power(data,key):
             if key not in data:
                 print "getPartner_data::Error " + str(key) + " not found!"
@@ -60,6 +66,8 @@ class OpenERP(object):
             return None
 
         str_limit = 60  # Based on empirical results files 
+        result['contract_name'] = contract_id
+        result['contract_id'] = get_dict_raw(pol_data[0], 'id')
         result['power'] = get_dict_power(pol_data[0],'potencia')[:str_limit]
         result['cups'] = get_dict_data(pol_data[0],'cups')[:str_limit]
         result['tariff'] = get_dict_data(pol_data[0],'tarifa')[:str_limit]
@@ -71,8 +79,8 @@ class OpenERP(object):
             return None
         payer_id = pol_data[0]['pagador'][0]
         payer_data = part_obj.read([payer_id],['name','lang'])
-        compound_name = get_dict_data(payer_data[0],'name')[:str_limit]
-        result['lang'] = get_dict_data(payer_data[0],'lang')
+        compound_name = get_dict_raw(payer_data[0],'name')[:str_limit]
+        result['lang'] = get_dict_raw(payer_data[0],'lang')
 
         if not result['power'] or not result['cups'] or not result['tariff']\
             or not result['address'] or not compound_name:
