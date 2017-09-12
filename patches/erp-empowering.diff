@@ -20,7 +20,7 @@ index 5bcce68..71dce8b 100644
 -        for polissa in self.browse(cursor, uid, ids, context=context):
 +        for report in reports:
 +            polissa = self.browse(cursor, uid, report['contract_id'],
-+                context=context):
++                context=context)
              if not polissa.empowering_profile_id:
                  continue
 +
