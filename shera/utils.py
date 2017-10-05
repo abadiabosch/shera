@@ -35,7 +35,7 @@ def setup_redis():
 def setup_queue(**kwargs):
     config = {
         'connection': os.getenv('RQ_CONNECTION', None), 
-        'async': os.getenv('RQ_ASYNC', False), 
+        'async': bool(os.getenv('RQ_ASYNC', False)),
     }
     config.update(kwargs)
     config['connection'] = setup_redis()
