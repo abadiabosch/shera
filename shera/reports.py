@@ -25,7 +25,7 @@ def get_reports(contracts_path, reports_path):
 
     with open(contracts_path, 'rb') as file_:
         reader = csv.reader(file_, delimiter=';', quotechar='|')
-        month = os.path.basename(contracts_path)
+        month = os.path.splitext(os.path.basename(contracts_path))[0]
         return [
             {'contract_id': contract[contract_id_offset],
              'body': contract[body_offset], 
