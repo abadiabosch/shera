@@ -19,9 +19,10 @@ def get_reports(contracts_path, reports_path):
     cups_offset = 1
     power_offset = 2
     tariff_id_offset = 3
-    report_offset = 4
+    report_name_offset = 4
     body_offset = 5
     valid_offset = 6
+    report_offset = 7
 
     with open(contracts_path, 'rb') as file_:
         reader = csv.reader(file_, delimiter=';', quotechar='|')
@@ -30,13 +31,15 @@ def get_reports(contracts_path, reports_path):
             {'contract_id': contract[contract_id_offset],
              'body': contract[body_offset], 
              'report': os.path.join(reports_path, contract[report_offset]),
-             'report_name': nameit(contract[contract_id_offset], month)}
+             'report_name': nameit(
+                 contract[contract_id_offset] + '_' + contract[report_name_offset], month)}
             for contract in reader
-                if (is_valid(contract[contract_id_offset]) and
+                if (contract and
+                   is_valid(contract[contract_id_offset]) and
                    is_valid(contract[power_offset]) and
                    is_valid(contract[tariff_id_offset]) and
                    is_valid_file(reports_path, contract[report_offset]) and
-                   is_valid(contract[body_offset]) and
+                   #is_valid(contract[body_offset]) and
                    contract[valid_offset] == 'True')]
     return [] 
 
