@@ -52,8 +52,12 @@ def _(message):
 def add_custom(original_pdf, custom_pdf, output_pdf):
     output_pdf_aux = output_pdf + '.aux'
     pypdftk.stamp(original_pdf, custom_pdf, output_pdf_aux)
-    pypdftk.add_custom(output_pdf_aux, original_pdf, output_pdf)
-    os.unlink(output_pdf_aux)
+    num_pages = pypdftk.get_num_pages(original_pdf)
+    if num_pages > 1:
+        pypdftk.add_custom(output_pdf_aux, original_pdf, output_pdf)
+        os.unlink(output_pdf_aux)
+    else:
+        os.rename(output_pdf_aux, output_pdf)
 
 def customize(report, template_name, path_aux, path_output):
     fields = ['name', 'surname' ,'address', 'cups', 'tariff', 'power', 'lang']
