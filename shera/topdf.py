@@ -56,7 +56,7 @@ def add_custom(original_pdf, custom_pdf, output_pdf):
     os.unlink(output_pdf_aux)
 
 def customize(report, template_name, path_aux, path_output):
-    fields = ['name', 'surname' ,'address', 'tariff', 'power', 'lang']
+    fields = ['name', 'surname' ,'address', 'cups', 'tariff', 'power', 'lang']
     customer = {field:report[field] for field in fields}
     result = Template(
         read_mako_template(template_name), 
