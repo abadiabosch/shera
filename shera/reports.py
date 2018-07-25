@@ -30,7 +30,7 @@ def get_reports(contracts_path, reports_path):
         return [
             {'contract_id': contract[contract_id_offset],
              'body': contract[body_offset], 
-             'report': os.path.join(reports_path, contract[report_offset]),
+             'report': os.path.join(reports_path, contract[contract_id_offset] + '.pdf'),
              'report_name': nameit(
                  contract[contract_id_offset] + '_' + contract[report_name_offset], month)}
             for contract in reader
@@ -38,9 +38,7 @@ def get_reports(contracts_path, reports_path):
                    is_valid(contract[contract_id_offset]) and
                    is_valid(contract[power_offset]) and
                    is_valid(contract[tariff_id_offset]) and
-                   is_valid_file(reports_path, contract[report_offset]) and
-                   #is_valid(contract[body_offset]) and
-                   contract[valid_offset] == 'True')]
+                   is_valid_file(reports_path, contract[contract_id_offset] + '.pdf'))]
     return [] 
 
 
