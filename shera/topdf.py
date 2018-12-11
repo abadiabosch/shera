@@ -6,7 +6,7 @@ from datetime import datetime
 from mako.template import Template
 from mako import exceptions
 import pdfkit
-import pypdftk
+import pypdftk_ as pypdftk
 
 ENCODING = 'iso-8859-1'
 WKHTMLTOPDF = os.getenv('WKHTMLTOPDF_', None)
