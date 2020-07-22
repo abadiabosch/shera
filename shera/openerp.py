@@ -59,7 +59,7 @@ class OpenERP(object):
                                            'active',
                                            'tarifa',
                                            'cups_direccio',
-                                           'pagador'])
+                                           'titular'])
         if len(pol_data) != 1:
             print "get_partner_data::Error reading data from polisse \
                 id "+str(pol_ids)
@@ -74,10 +74,10 @@ class OpenERP(object):
         result['address'] = pol_data[0]['cups_direccio'][:str_limit] \
                             if 'cups_direccio' in pol_data[0] else None
 
-        if 'pagador' not in pol_data[0]:
+        if 'titular' not in pol_data[0]:
             print "get_partner_data::Error finding payer in erp"
             return None
-        payer_id = pol_data[0]['pagador'][0]
+        payer_id = pol_data[0]['titular'][0]
         payer_data = part_obj.read([payer_id],['name','lang'])
         compound_name = get_dict_raw(payer_data[0],'name')[:str_limit]
         result['lang'] = get_dict_raw(payer_data[0],'lang')
